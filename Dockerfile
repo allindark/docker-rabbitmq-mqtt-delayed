@@ -1,10 +1,11 @@
-FROM rabbitmq:3.5.0
+FROM rabbitmq:3.6.1
 
 RUN apt-get update
-
+RUN apt-get install unzip
 RUN apt-get install -y curl
 
-RUN curl http://www.rabbitmq.com/community-plugins/v3.6.x/rabbitmq_delayed_message_exchange-0.0.1.ez > $RABBITMQ_HOME/plugins/rabbitmq_delayed_message_exchange-0.0.1.ez
+RUN curl https://dl.bintray.com/rabbitmq/community-plugins/3.6.x/rabbitmq_delayed_message_exchange/rabbitmq_delayed_message_exchange-20171215-3.6.x.zip > $RABBITMQ_PLUGINS_DIR/rabbitmq_delayed_message_exchange-20171215-3.6.x.zip
+RUN unzip $RABBITMQ_PLUGINS_DIR/rabbitmq_delayed_message_exchange-20171215-3.6.x.zip -d $RABBITMQ_PLUGINS_DIR
 
 RUN rabbitmq-plugins enable --offline rabbitmq_management
 RUN rabbitmq-plugins enable --offline rabbitmq_mqtt
